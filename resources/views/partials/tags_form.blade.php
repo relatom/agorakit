@@ -1,4 +1,14 @@
 
+{{--
+This form needs those variables to work
+
+$tags->selected : an array of current tags
+$tags->list : an array of available tags 
+$tags->allow_new : true if new tags are allowed, false otherwise (false assumed)
+
+--}}
+
+
 <div class="form-group">
     <label for="tags">{{trans('messages.tags')}}</label>
 
@@ -11,36 +21,23 @@
     <select class="form-control tags"
     name="tags[]"
     multiple="multiple"
-    @unless (isset($group) && $group->tagsAreLimited())
-        data-allow-new-tags="true"
-    @endunless>
+    @if (isset($tags->allow_new) && $tags->allow_new) 
+    data-tags="true" @endif>
 
-    @if (isset($group) && $group->tagsAreLimited())
-        @if (isset($model_tags))
-            @foreach ($model_tags as $tag)
-                <option selected="selected" value="{{$tag->name}}">{{$tag->name}}</option>
+    
+        @if (isset($tags->current))
+            @foreach ($tags->current as $tag)
+                <option selected="selected" value="{{$tag}}">{{$tag}}</option>
             @endforeach
         @endif
 
-        @foreach ($group->allowedTags() as $tag)
-            <option value="{{$tag->name}}">{{$tag->name}}</option>
-        @endforeach
-    @else
-
-        @if (isset($model_tags))
-            @foreach ($model_tags as $tag)
-                <option selected="selected" value="{{$tag->name}}">{{$tag->name}}</option>
+        @if (isset($tags->list))
+            @foreach ($tags->list as $tag)
+                <option value="{{$tag}}">{{$tag}}</option>
             @endforeach
         @endif
 
-        @if (isset($group) && $group->exists)
-            @foreach ($group->tagsUsed() as $tag)
-                <option value="{{$tag->name}}">{{$tag->name}}</option>
-            @endforeach
-        @endif
-    @endif
-
-</select>
+    </select>
 
 
 </div>

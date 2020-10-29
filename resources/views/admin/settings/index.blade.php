@@ -153,7 +153,7 @@
                     <div class="setting-help">
                         {{ __('Enter a coma separated list of allowed tags or leave blank to allow free tagging') }}
                     </div>
-                    {!! Form::text('group_tags', setting('group_tags'), ['class' => 'form-control']) !!}
+                   @include('partials.tags_form')
                     
 
                 </div>

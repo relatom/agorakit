@@ -19,7 +19,7 @@
 
     <link rel="stylesheet" href="{{ asset('/css/fullcalendar.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/datatables.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/selectize.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/unpoly.css') }}">
 
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
@@ -75,7 +75,7 @@
     <script src="{{ asset('js/datatables.min.js') }}"></script>
 
 
-    <script src="{{ asset('js/selectize.js') }}"></script>
+    <script src="{{ asset('js/select2.js') }}"></script>
 
 
 

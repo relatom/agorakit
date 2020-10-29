@@ -32,7 +32,6 @@
         "@fullcalendar/timegrid": "^4.4.0",
         "@tailwindcss/typography": "^0.2.0",
         "bootstrap": "^4.5.0",
-        "selectize.js": "^0.12.12",
         "tailwindcss": "^1.9.1",
         "unpoly": "^0.61.1"
     }

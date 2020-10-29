@@ -245,10 +245,10 @@ up.compiler('.network-error', function (element) {
 - add data-allow-new-tags to allow the creation of new tags
 */
 up.$compiler('select.tags', function ($element, data) {
-	var create = $element[0].hasAttribute("data-allow-new-tags")
-	$element.selectize({
-		persist: true,
-		create: create
+	var tags = $element[0].hasAttribute("data-allow-new-tags")
+	$element.select2({
+		tags: tags,
+		closeOnSelect: false
 	});
 });
 
