@@ -13,21 +13,29 @@
 </div>
 
 
-<div class="notifications">
+<div class="notifications divide-y">
     @if ($notifications)
 
     @foreach($notifications as $notification)
 
-    <div>
-        {{$notification->type}}
+    <div up-expand class="hover:bg-gray-300 py-2 px-2 flex">
 
-        @if ($notification->type == 'App\Notifications\GroupCreated')
-        @include('notifications.group_created')
-        @endif
+        <div class="flex-grow">
+            @if ($notification->type == 'App\Notifications\GroupCreated')
+            @include('notifications.group_created')
+            @endif
 
-        @if ($notification->type == 'App\Notifications\MentionedUser')
-        @include('notifications.mentioned_user')
-        @endif
+            @if ($notification->type == 'App\Notifications\MentionedUser')
+            @include('notifications.mentioned_user')
+            @endif
+
+            <div class="text-xs text-gray-400">
+                {{$notification->type}}
+            </div>
+        </div>
+        <div>
+        <a href="#" class="btn btn-secondary">Mark as read</a>
+        </div>
     </div>
     @endforeach
 
