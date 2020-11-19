@@ -208,7 +208,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('comments/{comment}/unreact', 'CommentReactionController@destroy');
 
     // Notifications
-    Route::get('notifications', 'NotificationController@index')->name('notifications');
+    Route::get('notifications', 'NotificationController@index')->name('notifications.index');
 
 
 

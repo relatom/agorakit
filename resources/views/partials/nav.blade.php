@@ -11,9 +11,8 @@
     </a>
 
     <a up-follow up-cache="false" href="{{ route('index') }}"
-    class="sm:hidden text-gray-200 px-1 flex flex-col justify-center items-center rounded-full  hover:bg-gray-600 bg-gray-700 h-12 w-12 sm:mr-2 sm:w-auto sm:px-4 sm:bg-transparent sm:rounded"
-    >
-    <i class="fa fa-home text-lg"></i>
+        class="sm:hidden text-gray-200 px-1 flex flex-col justify-center items-center rounded-full  hover:bg-gray-600 bg-gray-700 h-12 w-12 sm:mr-2 sm:w-auto sm:px-4 sm:bg-transparent sm:rounded">
+        <i class="fa fa-home text-lg"></i>
     </a>
 
 
@@ -38,12 +37,12 @@
             {{--
             <a up-target="body" class="dropdown-item" class="dropdown-item"
                 href="{{ action('GroupController@indexOfMyGroups') }}">
-                {{ trans('messages.my_groups') }}
+            {{ trans('messages.my_groups') }}
             </a>
             <div class="dropdown-divider"></div>
             --}}
 
-            
+
 
 
 
@@ -74,8 +73,8 @@
 
             <i class="fa fa-university text-lg sm:hidden"></i>
             <span class="hidden sm:inline">
-            @lang('Overview')
-            <i class="fa fa-caret-down"></i>
+                @lang('Overview')
+                <i class="fa fa-caret-down"></i>
             </span>
 
 
@@ -137,51 +136,40 @@
 
 
 
-  
+
     <!-- search-->
     @auth
     <form up-target="body" class="form-inline my-2 hidden lg:block sm:px-4" role="search" action="{{ url('search') }}"
-    method="get">
-    <div class="input-group">
-        <input class="form-control form-control-sm" type="text" name="query"
-            placeholder="{{ trans('messages.search') }}..." aria-label="Search">
-         @csrf
-        
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary btn-sm" type="submit"><span class="fa fa-search"></span></button>
+        method="get">
+        <div class="input-group">
+            <input class="form-control form-control-sm" type="text" name="query"
+                placeholder="{{ trans('messages.search') }}..." aria-label="Search">
+            @csrf
+
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary btn-sm" type="submit"><span
+                        class="fa fa-search"></span></button>
+            </div>
         </div>
-    </div>
     </form>
     @endauth
 
 
-    <!-- Notifications -->
-    
-    @if(isset($notifications))
-    <div class="dropdown hidden lg:block sm:px-4">
-        <a href="#" 
-        class="text-gray-200 px-1 flex flex-col justify-center items-center rounded-full  hover:bg-gray-600 bg-gray-700 h-12 w-12 sm:mr-2 sm:px-4 sm:bg-transparent sm:rounded"
-        data-toggle="dropdown" role="button"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-bell"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right rounded shadow">
-            @foreach($notifications as $notification)
+ 
+    @auth
+    @unless(auth()->user()->unreadNotifications->isEmpty())
+    <a href="{{ route('notifications.index') }}"
+        up-popup=".notifications" up-position="bottom" up-align="right"
+        class="relative text-gray-200 px-1 flex flex-col justify-center items-center rounded-full  hover:bg-gray-600 bg-gray-700 h-12 w-12 mr-2 sm:w-auto sm:px-4 sm:bg-transparent sm:rounded">
 
-            <a class="dropdown-item">
-                @if ($notification->type == 'App\Notifications\GroupCreated')
-                @include('notifications.group_created')
-                @endif
-
-                @if ($notification->type == 'App\Notifications\MentionedUser')
-                @include('notifications.mentioned_user')
-                @endif
-            </a>
-            @endforeach
+        <span class="fas fa-bell sm:text-lg"></span>
+         <div class="absolute top-0 right-0 -mt-1 -mr-1 sm:mt-2 sm:mr-2 px-1 text-xs bg-red-600 rounded-full">
+        {{ auth()->user()->unreadNotifications->count() }}
         </div>
-    </div>
-    @endif
-    
+
+    </a>
+    @endunless
+    @endauth
 
 
 
@@ -189,25 +177,24 @@
     <!-- locales -->
     @if(\Config::has('app.locales'))
     <div class="dropdown sm:px-4 hidden lg:block">
-        <a href="#" 
-        class="text-gray-200 px-1 flex flex-col justify-center items-center rounded-full  hover:bg-gray-600 bg-gray-700 h-12 w-12 mr-2 sm:w-auto sm:px- sm:bg-transparent sm:rounded"
-        data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false">
+        <a href="#"
+            class="text-gray-200 px-1 flex flex-col justify-center items-center rounded-full  hover:bg-gray-600 bg-gray-700 h-12 w-12 mr-2 sm:w-auto sm:px- sm:bg-transparent sm:rounded"
+            data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span>
-            <i class="fa fa-globe"></i> 
-            {{ strtoupper(app()->getLocale()) }}
-            <i class="fa fa-caret-down"></i>
-            <span>
-    </a>
-    <div class="dropdown-menu dropdown-menu-right rounded shadow">
-        @foreach(\Config::get('app.locales') as $locale)
-        @if($locale !== app()->getLocale())
-        <a up-target="body" class="dropdown-item" href="{{ Request::url() }}?force_locale={{ $locale }}">
-            {{ strtoupper($locale) }}
+                <i class="fa fa-globe"></i>
+                {{ strtoupper(app()->getLocale()) }}
+                <i class="fa fa-caret-down"></i>
+                <span>
         </a>
-        @endif
-        @endforeach
-    </div>
+        <div class="dropdown-menu dropdown-menu-right rounded shadow">
+            @foreach(\Config::get('app.locales') as $locale)
+            @if($locale !== app()->getLocale())
+            <a up-target="body" class="dropdown-item" href="{{ Request::url() }}?force_locale={{ $locale }}">
+                {{ strtoupper($locale) }}
+            </a>
+            @endif
+            @endforeach
+        </div>
     </div>
     @endif
 
@@ -216,8 +203,7 @@
     @auth
     <!-- User profile -->
     <div class="dropdown flex-shrink-0 h-12 w-12">
-        <a href="#" 
-        data-toggle="dropdown" role="button" aria-expanded="false">
+        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false">
             <img src="{{ route('users.cover', [Auth::user(), 'small']) }}" class="rounded-full h-12 w-12" />
 
         </a>
@@ -278,7 +264,7 @@
     @guest
 
     <a up-modal=".dialog"
-        class="text-gray-200 px-1 flex flex-col justify-center items-center rounded-full hover:bg-gray-600 bg-gray-700 h-12 w-12 sm:w-auto sm:px-4 my-2 mr-2"
+        class="text-gray-200 px-1 flex flex-col justify-center items-center sm:rounded rounded-full hover:bg-gray-600 bg-gray-700 h-12 w-12 sm:w-auto sm:px-4 my-2 mr-2"
         href="{{ url('login') }}">
 
         <i class="fa fa-sign-in text-lg sm:hidden"></i>
@@ -286,7 +272,7 @@
     </a>
 
     <a up-modal=".dialog"
-        class="text-gray-200 px-1 flex flex-col justify-center items-center rounded-full hover:bg-gray-600 bg-gray-700 h-12 w-12 sm:w-auto sm:px-4 my-2"
+        class="text-gray-200 px-1 flex flex-col justify-center items-center sm:rounded rounded-full hover:bg-gray-600 bg-gray-700 h-12 w-12 sm:w-auto sm:px-4 my-2"
         href="{{ url('register') }}">
         <i class="fa fa-pencil-square-o text-lg sm:hidden"></i>
         <span class="hidden sm:inline">{{ trans('messages.register') }}</span>

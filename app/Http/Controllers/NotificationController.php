@@ -13,11 +13,8 @@ class NotificationController extends Controller
      */
     public function index(Request $request)
     {
-
-        //return $request->user()->unreadNotifications;
-
         return view('notifications.index')
-        ->with('notifications', $request->user()->unreadNotifications()->paginate(50));
+        ->with('notifications', $request->user()->unreadNotifications()->paginate(20));
     }
 
     /**
