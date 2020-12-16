@@ -1,0 +1,107 @@
+version: '3'
+
+networks: 
+  agorakit:
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx.dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html:delegated
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - agorakit
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - agorakit
+
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php.dockerfile
+    container_name: php
+    volumes:
+      - ./:/var/www/html:delegated
+    ports:
+      - "9000:9000"
+    networks:
+      - agorakit
+
+  composer:
+    build:
+      context: .
+      dockerfile: ./docker/composer.dockerfile
+    container_name: composer
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - php
+    networks:
+      - agorakit
+    entrypoint: ['composer', '--ignore-platform-reqs']
+
+  npm:
+    image: node:13.7
+    container_name: npm
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    networks:
+      - agorakit
+    entrypoint: ['npm']
+
+  artisan:
+    build:
+      context: .
+      dockerfile: ./docker/php.dockerfile
+    container_name: artisan
+    volumes:
+      - ./:/var/www/html:delegated
+    depends_on:
+      - mysql
+    working_dir: /var/www/html
+    networks:
+      - agorakit
+    entrypoint: ['php', '/var/www/html/artisan']
+    
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    command: redis-server --requirepass secret
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      - agorakit
+
+  mail:
+    container_name: fake_mail
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
+      - 1025:1025
+    networks:
+      - agorakit
