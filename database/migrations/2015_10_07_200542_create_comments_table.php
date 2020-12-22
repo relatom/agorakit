@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->text('body');
-            $table->integer('vote');
+            $table->integer('vote')->nullable();
             $table->integer('discussion_id')->unsigned();
             $table->integer('user_id')->unsigned()->references('id')->on('users');
         });

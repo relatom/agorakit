@@ -16,8 +16,8 @@ class CreateGroupsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('body');
-            $table->text('cover');
-            $table->integer('user_id')->unsigned();
+            $table->text('cover')->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

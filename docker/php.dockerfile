@@ -11,4 +11,9 @@ RUN chown laravel:laravel /var/www/html
 
 WORKDIR /var/www/html
 
+RUN apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
+
 RUN docker-php-ext-install pdo pdo_mysql bcmath

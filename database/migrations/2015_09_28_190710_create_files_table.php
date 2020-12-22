@@ -11,13 +11,13 @@ class CreateFilesTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->softDeletes();
-            $table->text('path');
-            $table->text('name');
-            $table->text('original_filename');
-            $table->text('original_extension');
-            $table->text('mime');
-            $table->integer('user_id')->unsigned()->references('id')->on('users');
-            $table->integer('group_id')->unsigned()->index()->references('id')->on('groups');
+            $table->text('path')->nullable();
+            $table->text('name')->nullable();
+            $table->text('original_filename')->nullable();
+            $table->text('original_extension')->nullable();
+            $table->text('mime')->nullable();
+            $table->integer('user_id')->unsigned()->references('id')->on('users')->nullable();
+            $table->integer('group_id')->unsigned()->index()->references('id')->on('groups')->nullable();
         });
     }
 

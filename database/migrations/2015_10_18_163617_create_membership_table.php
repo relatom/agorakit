@@ -18,7 +18,7 @@ class CreateMembershipTable extends Migration
             * A json string that contains any additional info we'd need for memberships.
             * Not yet in use
             */
-            $table->text('config');
+            $table->text('config')->nullable();
 
             /*
             Membership type
@@ -31,7 +31,7 @@ class CreateMembershipTable extends Migration
             $table->integer('notification_interval');
 
             // When was the last notification sent ?
-            $table->timestamp('notified_at');
+            $table->timestamp('notified_at')->nullable();
         });
     }
 

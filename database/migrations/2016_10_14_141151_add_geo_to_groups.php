@@ -13,9 +13,9 @@ class AddGeoToGroups extends Migration
     public function up()
     {
         Schema::table('groups', function ($table) {
-            $table->text('address');
-            $table->float('latitude', 10, 7);
-            $table->float('longitude', 10, 7);
+            $table->text('address')->nullable();
+            $table->float('latitude', 10, 7)->nullable();
+            $table->float('longitude', 10, 7)->nullable();
         });
     }
 

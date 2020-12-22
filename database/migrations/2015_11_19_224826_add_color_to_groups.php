@@ -12,7 +12,7 @@ class AddColorToGroups extends Migration
     public function up()
     {
         Schema::table('groups', function ($table) {
-            $table->string('color');
+            $table->string('color')->nullable();
         });
     }
 

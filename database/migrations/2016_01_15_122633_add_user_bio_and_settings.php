@@ -12,8 +12,8 @@ class AddUserBioAndSettings extends Migration
     public function up()
     {
         Schema::table('users', function ($table) {
-            $table->text('body');
-            $table->text('preferences');
+            $table->text('body')->nullable();
+            $table->text('preferences')->nullable();
         });
     }
 

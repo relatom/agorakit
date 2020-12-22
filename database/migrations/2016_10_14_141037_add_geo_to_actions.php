@@ -13,8 +13,8 @@ class AddGeoToActions extends Migration
     public function up()
     {
         Schema::table('actions', function ($table) {
-            $table->float('latitude', 10, 7);
-            $table->float('longitude', 10, 7);
+            $table->float('latitude', 10, 7)->nullable();
+            $table->float('longitude', 10, 7)->nullable();
         });
     }
 

@@ -13,7 +13,7 @@ class AddSettingsToGroups extends Migration
     public function up()
     {
         Schema::table('groups', function ($table) {
-            $table->text('settings');
+            $table->text('settings')->nullable();
         });
     }
 
